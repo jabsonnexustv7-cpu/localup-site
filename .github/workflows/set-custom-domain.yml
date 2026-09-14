@@ -1,0 +1,27 @@
+name: Configure Pages Custom Domain
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/set-custom-domain.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+
+jobs:
+  configure-domain:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure custom domain
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api --method PUT \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2026-03-10" \
+            "/repos/${GITHUB_REPOSITORY}/pages" \
+            -f cname='localup.net.br' \
+            -f build_type='workflow'
