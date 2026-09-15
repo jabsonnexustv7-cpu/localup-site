@@ -28,9 +28,8 @@ function openProposal(trigger) {
   formStatus.textContent = '';
   formStatus.classList.remove('error');
 
-  const plan = trigger?.dataset?.plan;
-  if (plan && form.elements.plano_interesse) {
-    form.elements.plano_interesse.value = plan;
+  if (form.elements.plano_interesse) {
+    form.elements.plano_interesse.value = trigger?.dataset?.plan || 'Quero entender as opções';
   }
 
   window.setTimeout(() => form.elements.nome?.focus(), 20);
